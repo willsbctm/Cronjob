@@ -1,0 +1,41 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: "{{ .Release.Name }}-{{ .Values.job.name }}"
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+spec:
+  concurrencyPolicy: {{ .Values.job.concurrencyPolicy }}
+  failedJobsHistoryLimit: {{ .Values.job.failedJobsHistoryLimit }}
+  startingDeadlineSeconds: {{ .Values.job.startingDeadlineSeconds }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ .Release.Name }}
+            cron: {{ .Values.job.name }}
+        spec:
+          containers:
+          - image: "{{ .Values.job.image.repository }}:{{ .Values.job.image.tag }}"
+            imagePullPolicy: {{ .Values.job.image.imagePullPolicy }}
+            name: {{ .Values.job.name }}
+            {{- with .Values.job.env }}
+            env:
+{{ toYaml . | indent 12 }}
+            {{- end }}
+          {{- with .Values.job.nodeSelector }}
+          nodeSelector:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.job.affinity }}
+          affinity:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.job.tolerations }}
+          tolerations:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          restartPolicy: {{ $.Values.job.restartPolicy }}
+  schedule: {{ .Values.job.schedule | quote }}
+  successfulJobsHistoryLimit: {{ .Values.job.successfulJobsHistoryLimit }}
