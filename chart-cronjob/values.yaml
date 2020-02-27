@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 job:
-  name: hello-cronjob
+  name: oi-cronjob
   image:
     repository: cronjob
     tag: stable1
