@@ -1,12 +1,12 @@
-# Default values for chart-cronjob.
+# Default values for exemplocronjob.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 job:
-  name: oi-cronjob
+  name: meu-cronjob
   image:
     repository: cronjob
-    tag: stable1
+    tag: stable
     imagePullPolicy: IfNotPresent
   schedule: "*/1 * * * *"
   resources:
@@ -18,10 +18,9 @@ job:
       memory: 256Mi
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 1
-  startingDeadlineSeconds: 200
+  startingDeadlineSeconds: 60
   concurrencyPolicy: Forbid
   restartPolicy: OnFailure
-  resources: {}
   nodeSelector: {}
   tolerations: []
   affinity: {}

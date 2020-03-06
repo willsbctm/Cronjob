@@ -7,6 +7,7 @@ namespace Job
         static void Main(string[] args)
         {
             Console.WriteLine($"Rodei às {DateTime.Now}");
+            //throw new Exception("Erro ao executar job");
         }
     }
 }

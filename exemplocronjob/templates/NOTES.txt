@@ -1,0 +1,9 @@
+1. Cronjob publicado com sucesso. Para visualizá-lo:
+kubectl get cronjob {{ .Release.Name }}-{{ .Values.job.name }}
+
+2. Existe uma validação do job antes de publicá-lo, para visualizar:
+kubectl get pod {{ .Release.Name }}-{{ .Values.job.name }}-test-connection
+Os logs:
+kubectl logs {{ .Release.Name }}-{{ .Values.job.name }}-test-connection
+
+3. Depois da primeira execução existirá um job e um pod.
